@@ -1,13 +1,30 @@
 import React from 'react'
 
-const TodoItem = ({ className, id, title, isDone }) => {
+const TodoItem = ({
+  className,
+  id,
+  title,
+  isDone,
+  onDeleteTaskButtonClick,
+  onTaskCompleteChange,
+}) => {
   return (
     <li className={`todo-item ${className}`}>
-      <input className="todo-item__checkbox" id={id} type="checkbox" checked={isDone} readOnly />
+      <input
+        onChange={({ target }) => onTaskCompleteChange(id, target.checked)}
+        className="todo-item__checkbox"
+        id={id}
+        type="checkbox"
+        checked={isDone}
+      />
       <label className="todo-item__label" htmlFor={id}>
         {title}
       </label>
-      <button className="todo-item__delete-button" aria-label="Delete" title="Delete">
+      <button
+        onClick={() => onDeleteTaskButtonClick(id)}
+        className="todo-item__delete-button"
+        aria-label="Delete"
+        title="Delete">
         <svg
           width="20"
           height="20"

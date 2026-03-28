@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TodoInfo = ({ total, done }) => {
+const TodoInfo = ({ total, done, onDeleteAllButtonClick }) => {
   const hasTasks = total > 0
 
   return (
@@ -9,7 +9,7 @@ const TodoInfo = ({ total, done }) => {
         Done {done} from {total}
       </div>
       {hasTasks && (
-        <button className="todo__delete-all-button" type="button">
+        <button onClick={onDeleteAllButtonClick} className="todo__delete-all-button" type="button">
           Delete all
         </button>
       )}
