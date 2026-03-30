@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Field = ({ className, id, label, type = 'text', onInput, value }) => {
+const Field = ({ className, id, label, type = 'text', onInput, value, ref }) => {
   return (
     <div className={`field ${className}`}>
       <label className="field__label" htmlFor={id}>
@@ -14,6 +14,7 @@ const Field = ({ className, id, label, type = 'text', onInput, value }) => {
         id={id}
         placeholder=" "
         autoComplete="off"
+        ref={ref}
       />
     </div>
   )

@@ -1,4 +1,5 @@
 import React from 'react'
+import { memo } from 'react'
 
 const TodoItem = ({
   className,
@@ -7,9 +8,12 @@ const TodoItem = ({
   isDone,
   onDeleteTaskButtonClick,
   onTaskCompleteChange,
+  ref,
 }) => {
+  console.log('TodoItem')
+
   return (
-    <li className={`todo-item ${className}`}>
+    <li className={`todo-item ${className}`} ref={ref}>
       <input
         onChange={({ target }) => onTaskCompleteChange(id, target.checked)}
         className="todo-item__checkbox"
@@ -44,4 +48,4 @@ const TodoItem = ({
   )
 }
 
-export default TodoItem
+export default memo(TodoItem)

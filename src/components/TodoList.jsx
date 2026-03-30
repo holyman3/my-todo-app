@@ -1,7 +1,17 @@
 import React from 'react'
 import TodoItem from './TodoItem'
+import { memo } from 'react'
 
-const TodoList = ({ tasks = [], filteredTasks, onDeleteTaskButtonClick, onTaskCompleteChange }) => {
+const TodoList = ({
+  tasks = [],
+  filteredTasks,
+  onDeleteTaskButtonClick,
+  onTaskCompleteChange,
+  firstIncompleteTaskRef,
+  firstIncompleteTaskId,
+}) => {
+  console.log('TodoList')
+
   const hasTasks = tasks.length > 0
   const isFilteredTasksEmpty = filteredTasks?.length === 0
 
@@ -21,6 +31,7 @@ const TodoList = ({ tasks = [], filteredTasks, onDeleteTaskButtonClick, onTaskCo
           key={task.id}
           className="todo__item"
           onTaskCompleteChange={onTaskCompleteChange}
+          ref={task.id === firstIncompleteTaskId ? firstIncompleteTaskRef : null}
         />
       ))}
       {/* isdone uxxaki - true */}
@@ -28,4 +39,4 @@ const TodoList = ({ tasks = [], filteredTasks, onDeleteTaskButtonClick, onTaskCo
   )
 }
 
-export default TodoList
+export default memo(TodoList)

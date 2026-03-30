@@ -2,7 +2,7 @@ import React from 'react'
 import Button from './Button'
 import Field from './Field'
 
-const AddTaskForm = ({ addTask, newTaskTitle, setNewTaskTitle }) => {
+const AddTaskForm = ({ addTask, newTaskTitle, setNewTaskTitle, newTaskInputRef }) => {
   const onSubmit = (e) => {
     e.preventDefault()
     addTask()
@@ -10,6 +10,7 @@ const AddTaskForm = ({ addTask, newTaskTitle, setNewTaskTitle }) => {
   return (
     <form className="todo__form" onSubmit={onSubmit}>
       <Field
+        ref={newTaskInputRef}
         value={newTaskTitle}
         onInput={(e) => setNewTaskTitle(e.target.value)}
         className="todo__field"
