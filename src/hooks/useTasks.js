@@ -1,15 +1,8 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react'
-import useTasksLocalStorage from './useTasksLocalStorage'
+import tasksAPI from '../api/tasksApi'
 
 const useTasks = () => {
-  const { savedTasks, saveTasks } = useTasksLocalStorage()
-
-  const [tasks, setTasks] = useState(
-    savedTasks ?? [
-      { id: 'task-1', title: 'Buy Milk', isDone: false },
-      { id: 'task-2', title: 'Walk The Dog', isDone: true },
-    ],
-  ) //this code runs before the first render(UE one runs after the render)
+  const [tasks, setTasks] = useState([]) //this code runs before the first render(UE one runs after the render)
 
   const [newTaskTitle, setNewTaskTitle] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
@@ -21,47 +14,48 @@ const useTasks = () => {
     const isConfirmed = confirm('You sure to delete all the tasks')
 
     if (isConfirmed) {
-      setTasks([])
+      tasksAPI.deleteAll(tasks).then(() => setTasks([]))
     }
-  }, [])
+  }, [tasks])
 
   const deleteTask = useCallback(
     (taskId) => {
-      setTasks(tasks.filter(({ id }) => id !== taskId))
+      tasksAPI.delete(taskId).then(() => {
+        setTasks(tasks.filter(({ id }) => id !== taskId))
+      })
     },
     [tasks],
   )
 
   const toggleTask = useCallback(
     (taskId, isDone) => {
-      setTasks(tasks.map((task) => (task.id === taskId ? { ...task, isDone } : task)))
+      tasksAPI.toggleIsDone(taskId, isDone).then(() => {
+        setTasks(tasks.map((task) => (task.id === taskId ? { ...task, isDone } : task)))
+      })
     },
     [tasks],
   )
 
-  const addTask = useCallback(() => {
-    if (newTaskTitle.trim().length > 0) {
-      const newTask = {
-        id: crypto?.randomUUID() ?? Date.now().toString(),
-        title: newTaskTitle,
-        isDone: false,
-      }
+  const addTask = useCallback((title) => {
+    const newTask = {
+      title,
+      isDone: false,
+    }
 
-      setTasks((prevTasks) => [...prevTasks, newTask]) //no need for setting tasks in dep arr(no call to tasks)
+    tasksAPI.add(newTask).then((addedTask) => {
+      setTasks((prevTasks) => [...prevTasks, addedTask]) //no need for setting tasks in dep arr(no call to tasks)
       setNewTaskTitle('')
       setSearchQuery('') //to see new item(cuz search query can interfere it)
       newTaskInputRef.current.focus()
-    }
+    })
 
     console.log('ref', newTaskInputRef)
-  }, [newTaskTitle])
-
-  useEffect(() => {
-    saveTasks(tasks)
-  }, [tasks])
+  }, [])
 
   useEffect(() => {
     newTaskInputRef.current.focus()
+
+    tasksAPI.getAll().then(setTasks)
   }, [])
 
   const filteredTasks = useMemo(() => {
