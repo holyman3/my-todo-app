@@ -1,16 +1,17 @@
 import React from 'react'
+import styles from './Field.module.scss'
 
 const Field = ({ className, id, label, type = 'text', onInput, value, error, ref }) => {
   return (
-    <div className={`field ${className}`}>
-      <label className="field__label" htmlFor={id}>
+    <div className={`${styles.field} ${className}`}>
+      <label className={styles.label} htmlFor={id}>
         {label}
       </label>
       <input
         value={value}
         onChange={onInput}
         type={type}
-        className={`field__input ${error ? 'is-invaild' : ''}`}
+        className={`${styles.input} ${error ? styles.isInvalid : ''}`}
         id={id}
         placeholder=" "
         autoComplete="off"
@@ -18,7 +19,7 @@ const Field = ({ className, id, label, type = 'text', onInput, value, error, ref
       />
       {error && (
         //user at least somehow can red full error message via browser tooltip
-        <span className="field__error" title={error}>
+        <span className={styles.error} title={error}>
           {error}
         </span>
       )}

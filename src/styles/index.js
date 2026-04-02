@@ -4,7 +4,4 @@ import './variables.css'
 import './utils.css'
 import './globals.css'
 
-import './components/button.css'
-import './components/field.css'
-import './components/todo.css'
-import './components/todo-item.css'
+//global styles(normalization, fonts, global css variables), css modules for C stylization
