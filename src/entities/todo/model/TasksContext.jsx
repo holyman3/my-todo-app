@@ -24,26 +24,42 @@ export const TasksProvider = ({ children }) => {
 
   const { firstIncompleteTaskRef, firstIncompleteTaskId } = useIncompleteTaskScroll(tasks)
 
-  return (
-    <TasksContext
-      value={{
-        tasks,
-        filteredTasks,
-        firstIncompleteTaskRef,
-        firstIncompleteTaskId,
-        deleteTask,
-        deleteAllTasks,
-        toggleTask,
-        newTaskTitle,
-        setNewTaskTitle,
-        searchQuery,
-        setSearchQuery,
-        newTaskInputRef,
-        addTask,
-        disappearingTaskId,
-        appearingTaskId,
-      }}>
-      {children}
-    </TasksContext>
-  )
+  const value = useMemo(
+    () => ({
+      tasks,
+      filteredTasks,
+      deleteTask,
+      deleteAllTasks,
+      toggleTask,
+      newTaskTitle,
+      setNewTaskTitle,
+      searchQuery,
+      setSearchQuery,
+      newTaskInputRef,
+      addTask,
+      disappearingTaskId,
+      appearingTaskId,
+      firstIncompleteTaskRef,
+      firstIncompleteTaskId,
+    }),
+    [
+      tasks,
+      filteredTasks,
+      deleteTask,
+      deleteAllTasks,
+      toggleTask,
+      newTaskTitle,
+      setNewTaskTitle,
+      searchQuery,
+      setSearchQuery,
+      newTaskInputRef,
+      addTask,
+      disappearingTaskId,
+      appearingTaskId,
+      firstIncompleteTaskRef,
+      firstIncompleteTaskId,
+    ],
+  ) //wtf, why did this help with perfurmance and reduntant re-renders
+
+  return <TasksContext value={value}>{children}</TasksContext>
 }

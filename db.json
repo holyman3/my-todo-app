@@ -1,30 +1,4 @@
 {
-  "tasks": [
-    {
-      "title": "a",
-      "isDone": true,
-      "id": "pOjz2Xktp-E"
-    },
-    {
-      "title": "a",
-      "isDone": true,
-      "id": "R5JCTZ0whK4"
-    },
-    {
-      "title": "a",
-      "isDone": true,
-      "id": "hajjXMgkZUY"
-    },
-    {
-      "title": "a",
-      "isDone": true,
-      "id": "jcO-tDj_O2k"
-    },
-    {
-      "title": "l",
-      "isDone": false,
-      "id": "Edj-lK57uic"
-    }
-  ],
+  "tasks": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
