@@ -5,6 +5,7 @@ import { TasksContext } from '@/entities/todo'
 import RouterLink from '@/shared/ui/RouterLink'
 
 import styles from './TodoItem.module.scss'
+import { highlightCaseInsensitive } from '@/shared/utils/highlight'
 
 const TodoItem = ({ className, id, title, isDone }) => {
   console.log('TodoItem')
@@ -16,7 +17,10 @@ const TodoItem = ({ className, id, title, isDone }) => {
     toggleTask,
     disappearingTaskId,
     appearingTaskId,
+    searchQuery,
   } = useContext(TasksContext)
+
+  const highlightedTitle = highlightCaseInsensitive(title, searchQuery)
 
   return (
     <li
@@ -38,7 +42,7 @@ const TodoItem = ({ className, id, title, isDone }) => {
         {title}
       </label>
       <RouterLink to={`/tasks/${id}`} aria-label="Task detail page">
-        {title}
+        <span dangerouslySetInnerHTML={{ __html: highlightedTitle }} />
       </RouterLink>
       <button
         onClick={() => deleteTask(id)}
